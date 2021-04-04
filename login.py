@@ -65,15 +65,6 @@ class Login(tk.Frame):
                                             fg="#ff0000", bg="#33334d", anchor='n')
         incorrect_password_label.pack(pady=10)
 
-        '''def register(new_username, new_password, confirm_password):
-            if new_username:
-                if new_password != confirm_password:
-                    tmsg.showerror("ERROR", "New Password and Confirm Password are not same.")
-                else:
-                    print("yo")
-            else:
-                tmsg.showerror("ERROR", "Please enter user name.")'''
-
         def sign_up():
             global pop
             pop = tk.Toplevel(self)
@@ -103,6 +94,13 @@ class Login(tk.Frame):
 
             confirm_password_entry_box = tk.Entry(pop, textvariable=confirm_password, font=("orbitron", 12), width=22)
             confirm_password_entry_box.pack(ipady=7)
+
+            def Seconnd_handle_focus_in(_):
+                new_password_entry_box.configure(fg='black', show='*')
+                confirm_password_entry_box.configure(fg='black', show='*')
+
+            new_password_entry_box.bind('<FocusIn>', Seconnd_handle_focus_in)
+            confirm_password_entry_box.bind('<FocusIn>', Seconnd_handle_focus_in)
 
             def register():
                 if new_username.get():
