@@ -3,6 +3,7 @@ import time
 from app_database import AdminTable
 from handlers.dashboard_handler import DashboardHandler
 import tkinter.messagebox as tmsg
+from send_otp_mail import SendMail
 
 
 class Login(tk.Frame):
@@ -66,12 +67,14 @@ class Login(tk.Frame):
         incorrect_password_label.pack(pady=10)
 
         def sign_up():
-            global pop
+
             pop = tk.Toplevel(self)
             pop.title("Sign Up")
             pop.config(bg="#3d3d5c")
             pop.wm_iconbitmap("Image\\cloud-computing.ico")
-            pop.minsize(750, 600)
+            pop.geometry("400x400+450+150")
+            pop.focus_force()
+            pop.grab_set()
 
             tk.Label(pop, text="Enter your username", font=("orbitron", 13),
                      fg="white", bg="#3d3d5c").pack(pady=10)
@@ -126,11 +129,64 @@ class Login(tk.Frame):
             incorrect_info_label.pack(pady=10)
             # end of sign up function
 
-        forget_password_button = tk.Button(forget_pass_signup_button_frame,
-                                           text='Forget Password', relief='raised')
+        # ------------- Reset Function
+        def reset_password():
+            if username.get() == "":
+                tmsg.showerror('ERROR', 'Please Fill up the email box.')
+            else:
+                # SendMail(username.get(), otp=890)
+                pop2 = tk.Toplevel(self)
+                pop2.title("Reset Password")
+                pop2.config(bg="#3d3d5c")
+                pop2.wm_iconbitmap("Image\\cloud-computing.ico")
+                pop2.geometry("450x400+450+150")
+                pop2.focus_force()
+                pop2.grab_set()
+
+                tk.Label(pop2, text="Enter OTP", font=("orbitron", 13),
+                         fg="white", bg="#3d3d5c").grid(row=0, column=0, padx=10)
+
+                otp = tk.StringVar()
+                reset_new_password = tk.StringVar()
+                confirm_reset_password = tk.StringVar()
+                otp_entry_box = tk.Entry(pop2, textvariable=otp, font=("orbitron", 12), width=22)
+                otp_entry_box.focus_set()
+                otp_entry_box.grid(row=1, column=0, padx=10)
+
+                otp_verify_button = tk.Button(pop2, text='Verify OTP',
+                                              relief='raised', bg="#3d3d5c",
+                                              font=("orbitron", 10), fg="white")
+                otp_verify_button.grid(row=1, column=1, padx=10)
+
+                tk.Label(pop2, text="Enter your New password", font=("orbitron", 13),
+                         fg="white", bg="#3d3d5c").grid(row=2, column=0, padx=10, pady=20)
+
+                reset_password_entry_box = tk.Entry(pop2, textvariable=reset_new_password, font=("orbitron", 12), width=22)
+                reset_password_entry_box.grid(row=3, column=0, padx=10)
+
+                tk.Label(pop2, text="Confirm your password", font=("orbitron", 13),
+                         fg="white", bg="#3d3d5c").grid(row=4, column=0, padx=10, pady=20)
+
+                confirm_reset_password_entry_box = tk.Entry(pop2, textvariable=confirm_reset_password,
+                                                            font=("orbitron", 12), width=22)
+                confirm_reset_password_entry_box.grid(row=5, column=0, padx=10)
+
+                reset_button = tk.Button(pop2, text="Reset", font=("orbitron", 13),
+                                            relief="raised")
+                reset_button.grid(row=6, column=0, padx=30, pady=30)
+
+                incorrect_info_label = tk.Label(pop2, text='t', font=("orbitron", 13),
+                                                fg="#ff0000", bg="#3d3d5c", anchor='n')
+                incorrect_info_label.grid(row=7, column=0, padx=30, pady=10)
+                # end of reset function
+
+        forget_password_button = tk.Button(forget_pass_signup_button_frame, command=reset_password,
+                                           text='Forget Password', relief='raised',
+                                           bg="#3d3d5c", fg="white", font=("orbitron", 13))
         forget_password_button.pack(pady=15)
         sign_up_button = tk.Button(forget_pass_signup_button_frame, text='Sign Up',
-                                   command=sign_up, relief='raised')
+                                   command=sign_up, relief='raised', bg="#3d3d5c",
+                                   font=("orbitron", 13), fg="white")
         sign_up_button.pack(pady=5)
 
         bottom_frame = tk.Frame(self, relief='raised', borderwidth=3)
