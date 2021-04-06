@@ -10,7 +10,7 @@ class SendMail:
         from_email = Email(" your domain address")  # Change to your verified sender
         to_email = To(emailAddress)  # Change to your recipient
         subject = "Sending with SendGrid is Fun"
-        content = Content("text/plain", "your otp is "+str(otp)+".")
+        content = Content("text/plain", "your otp is "+otp+".")
         mail = Mail(from_email, to_email, subject, content)
 
         # Get a JSON-ready representation of the Mail object

@@ -1,8 +1,12 @@
 import tkinter as tk  # python 3
 import time
 from tkinter import ttk
-from app_database import UserTable
-import tkinter.messagebox as tmsg
+from app_database import insert
+from app_database import update
+from app_database import delete
+from app_database import delete_user_data
+from app_database import get_password
+import tkinter.messagebox as msg
 from handlers import login_handler
 
 
@@ -14,7 +18,6 @@ class Dashboard(tk.Frame):
         self.user_id = user_id
         self.user_name = user_name
         self.data = data
-        table = UserTable()
         # start heading frame
         heading_frame = tk.Frame(self, bg="#33334d")
         tk.Label(heading_frame, text="Admin Name : ", font=("orbitron", 13),
@@ -89,7 +92,7 @@ class Dashboard(tk.Frame):
             if selected not in data_tree.get_children():
                 row = [add_update_site.get(), add_update_username.get(), add_update_password.get(),
                        current_time_and_date, self.user_id]
-                new_id = table.insert(row)
+                new_id = insert(row)
                 enc = '*'*len(add_update_password.get())
                 count += 1
                 data_tree.insert(parent='', index='end', iid=new_id, text='', values=(count, add_update_site.get(),
@@ -100,7 +103,7 @@ class Dashboard(tk.Frame):
             else:
                 row = [add_update_site.get(), add_update_username.get(), add_update_password.get(),
                        current_time_and_date, self.user_id, selected]
-                table.update(row)
+                update(row)
                 serial_number = data_tree.item(selected, 'values')[0]
                 enc = '*' * len(add_update_password.get())
                 data_tree.item(selected, text='', values=(serial_number, add_update_site.get(),
@@ -120,7 +123,7 @@ class Dashboard(tk.Frame):
 
         def delete_row():
             x = data_tree.selection()
-            table.delete(x)
+            delete(x)
             global count
             if len(x) == 1:
                 data_tree.delete(x)
@@ -134,19 +137,22 @@ class Dashboard(tk.Frame):
         delete_button = tk.Button(button_frame, text='Delete', command=delete_row, relief="raised")
         delete_button.pack(pady=10, padx=10, side='left')
 
-        def show_row():
+        def show_password():
             selected = data_tree.focus()
-            selected_password = table.get_password(selected, self.user_id)
-            selected_row_data = data_tree.item(selected, 'values')
-            tmsg.showinfo("Login Credentials", "Your password for "+selected_row_data[1]+" is "
-                          + selected_password+" and username is "+selected_row_data[2])
-        show_button = tk.Button(button_frame, text='Show Password', command=show_row, relief="raised")
+            if selected:
+                selected_password = get_password(selected, self.user_id)
+                selected_row_data = data_tree.item(selected, 'values')
+                msg.showinfo("Login Credentials", "Your password for " + selected_row_data[1] + " is "
+                             + selected_password + " and username is " + selected_row_data[2])
+            else:
+                msg.showerror("ERROR", "Please select one above")
+        show_button = tk.Button(button_frame, text='Show Password', command=show_password, relief="raised")
         show_button.pack(pady=10, padx=70, side='left')
 
         def delete_all_row():
-            decision = tmsg.askokcancel("Warning", "Are you sure to delete all ?")
+            decision = msg.askokcancel("Warning", "Are you sure to delete all ?")
             if decision:
-                # table.delete(self.user_id)
+                delete_user_data(self.user_id)
                 for _ in data_tree.get_children():
                     data_tree.delete(_)
                 global count
