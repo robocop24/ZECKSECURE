@@ -4,7 +4,7 @@ from app_database import database as db
 from PIL import ImageTk, Image
 
 
-class PasswordManagerApp(tk.Tk):
+class ZeckSecure(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -25,20 +25,17 @@ class PasswordManagerApp(tk.Tk):
 
 
 def app_window():
-    app = PasswordManagerApp()
+    app = ZeckSecure()
     app.mainloop()
 
 
 if __name__ == "__main__":
     splash = tk.Tk()
-    splash.state("zoomed")
-    splash.title("ZeckSecure")
-    splash.wm_iconbitmap("Image\\cloud-computing.ico")
-    my_canvas =tk.Canvas(splash)
+    splash.geometry("600x400+350+150")
+    splash.resizable(width=False, height=False)
+    splash.overrideredirect(True)
+    my_canvas = tk.Canvas(splash)
     my_canvas.pack(fill='both', expand='true')
-    # splash_img = ImageTk.PhotoImage(Image.open("image\\splash_image.png"))
-    # img_label = tk.Label(image=splash_img)
-    # img_label.pack()
 
     def resizer(e):
         global splash_img, resize_image, new_bg
