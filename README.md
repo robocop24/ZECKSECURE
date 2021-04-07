@@ -25,4 +25,6 @@ Backend / Database : I used sqlite3 for it's db.
                      - There are 2 tables, "users" table for store all users credentials and "users_data" table for store all users data.
                      - for distinguish between different users data, primary key "user_id" of "users" table is act as foreign key in the "users_data" table. 
 
-[![ZECKSECURE](https://img.youtube.com/vi/JflR5g-7Rn8/0.jpg)](https://www.youtube.com/watch?v=JflR5g-7Rn8)
+
+
+                              [![ZECKSECURE](https://img.youtube.com/vi/JflR5g-7Rn8/0.jpg)](https://www.youtube.com/watch?v=JflR5g-7Rn8)
