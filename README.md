@@ -26,5 +26,4 @@ Backend / Database : I used sqlite3 for it's db.
                      - for distinguish between different users data, primary key "user_id" of "users" table is act as foreign key in the "users_data" table. 
 
 
-
-                              [![ZECKSECURE](https://img.youtube.com/vi/JflR5g-7Rn8/0.jpg)](https://www.youtube.com/watch?v=JflR5g-7Rn8)
+[![ZECKSECURE](http://img.youtube.com/vi/JflR5g-7Rn8/0.jpg)](http://www.youtube.com/watch?v=JflR5g-7Rn8)
